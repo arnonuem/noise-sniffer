@@ -39,12 +39,12 @@ GPIO.add_event_callback(channel, onPinChange)
 
 # MQTT STUFF
 
-def on_publish(client, userdata, mid):
-    print("message sent")
+#def on_publish(client, userdata, mid):
+#    print("message sent")
 
 
 mqttClient = mqtt.Client("noise_sensor")
-mqttClient.on_publish = on_publish
+#mqttClient.on_publish = on_publish
 mqttClient.connect('192.168.178.2', 1883)
 # start a new thread
 mqttClient.loop_start()
@@ -66,5 +66,5 @@ while True:
     # it returns false while he is not aware of delivery that's why calling wait_for_publish() is mandatory.
     info.wait_for_publish()
     print(info.is_published())
-    time.sleep(3)
+    time.sleep(1)
     
