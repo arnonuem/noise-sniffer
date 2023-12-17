@@ -59,7 +59,7 @@ mqttClient.loop_start()
 while True:
     info = mqttClient.publish(
         topic='sensor/noise',
-        payload=''.join(dataStream).encode('utf-8'),
+        payload=''.join(map(str, dataStream)).encode('utf-8'),
         qos=0, 
     )
     # Because published() is not synchronous,
