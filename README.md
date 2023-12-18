@@ -1,12 +1,29 @@
-# Noise Sniffer
-A python script that is running a flask webserver. 
-A specific endpoint can be called or polled to trigger a read on a specific pin.
-This just returns the value 0 or 1.
+# What is this?
+A python script that is listening to a GPIO pin of a RPI.
+Attached is a simple microphone which just returns a 1 if there is no noise and a 0 if there is a noise.
 
-# Daemon
+The data is collected in a sort of sliding window of like 30 entries. It sort of looks like `111111111111001111110000111111111...`
+
+This data is directly published to an MQTT broker to the topic `sensor/noise` using paho-mqtt.
+
+# Installation
+Clone the repo. Have Python 3 installed as well as the Paho MQTT dependency.
+```
+sudo pip3 install paho-mqtt
+```
+
+# Post installation
 Supervisord is used to permanently run the python script in background.
-The config file is located at /etc/supervisor/conf.d/noise-sniffer.conf
-The configured app is called `noisesniffer`
+Create a config file which is located at `/etc/supervisor/conf.d/noise-sniffer.conf`.
+
+Add the following content:
+```
+[program:noisesniffer]
+command = /usr/bin/python3 /home/someuser/noise-sniffer/noise_sniffer.py
+directory = /home/someuser/noise-sniffer
+user = someuser
+environment=HOME="/home/someuser", USER="someuser"
+```
 
 # Start system service
 `sudo supervisorctl start noisesniffer`
@@ -14,9 +31,8 @@ The configured app is called `noisesniffer`
 # Stop system service
 `sudo supervisorctl stop noisesniffer`
 
-
 # Running the app manually
 > python3 noise_sniffer.py
 
-This will fire up a webserver running on port 5000.
-Noise level can be fetched/polled with [get] rpi:5000/noise
+# Deprecation
+The `noise_sniffer_flask.py` is deprecated and not longer used.

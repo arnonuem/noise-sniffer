@@ -57,14 +57,15 @@ mqttClient.loop_start()
 #   1 = message is delivered once at minimum (using check where receiver has to acknowledge)
 #   2 = message is delivered exactly once (highest quality more checks)
 while True:
-    info = mqttClient.publish(
+#    info = mqttClient.publish(
+    mqttClient.publish(
         topic='sensor/noise',
         payload=''.join(map(str, dataStream)).encode('utf-8'),
         qos=0, 
     )
     # Because published() is not synchronous,
     # it returns false while he is not aware of delivery that's why calling wait_for_publish() is mandatory.
-    info.wait_for_publish()
-    print(info.is_published())
+#    info.wait_for_publish()
+#    print(info.is_published())
     time.sleep(1)
     
