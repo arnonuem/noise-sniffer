@@ -4,7 +4,7 @@ Attached is a simple microphone which just returns a 1 if there is no noise and 
 
 The data is collected in a sort of sliding window of like 30 entries. It sort of looks like `111111111111001111110000111111111...`
 
-This data is directly published to an MQTT broker to the topic `sensor/noise` using paho-mqtt.
+This data is directly published to an MQTT broker (https://nanomq.io) to the topic `sensor/noise` using paho-mqtt.
 
 # Installation
 Clone the repo. Have Python 3 installed as well as the Paho MQTT dependency.
